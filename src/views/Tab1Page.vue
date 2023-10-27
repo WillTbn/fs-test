@@ -11,7 +11,7 @@
           <ion-title size="large">Tab 1</ion-title>
         </ion-toolbar>
       </ion-header>
-
+      
       <ExploreContainer name="Tab 1 page" />
     </ion-content>
   </ion-page>
@@ -19,5 +19,14 @@
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { useStore } from 'vuex';
 import ExploreContainer from '@/components/ExploreContainer.vue';
+import { computed } from 'vue';
+
+const store = useStore()
+
+const user = computed(() => store.state.user.user )
+
+
+
 </script>
