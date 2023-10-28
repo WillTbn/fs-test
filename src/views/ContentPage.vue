@@ -1,25 +1,20 @@
 <template>
     <ion-page>    
 
-    <header-container
+        <!-- <header-container
         :name="user.name"
-    >
-        <ion-router-outlet></ion-router-outlet>
-    
-    </header-container>
-
-       
-        <ion-footer translucent class="control-footer" >
-            <ion-toolbar>
-                <ion-title>
-              
-                </ion-title>
-            </ion-toolbar>
-        </ion-footer>
+        > -->
+            <!-- <ion-tabs> -->
+                <!-- <ion-router-outlet></ion-router-outlet> -->
+                <router-view></router-view>
+            
+            <!-- </ion-tabs> -->
+        <!-- </header-container> -->
+        
     </ion-page>
 </template>
 <script>
-import {IonRouterOutlet, IonPage, IonContent, IonFooter, IonTitle, IonToolbar} from '@ionic/vue'
+import {IonRouterOutlet, IonPage, IonContent, IonFooter, IonTitle, IonToolbar, IonTabs} from '@ionic/vue'
 import {  defineComponent } from 'vue';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
@@ -27,7 +22,7 @@ import HeaderContainer from '../components/HeaderContainer.vue';
 
 export default defineComponent({
     name:'ContentPage',
-    components:{HeaderContainer,IonPage, IonRouterOutlet, IonContent, IonFooter, IonTitle, IonToolbar},
+    components:{HeaderContainer,IonPage, IonRouterOutlet, IonContent, IonFooter, IonTitle, IonToolbar, IonTabs},
     setup(){
         const store = useStore();
         const user = computed(() => store.state.user.user);

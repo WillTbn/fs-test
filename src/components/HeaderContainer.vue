@@ -1,48 +1,42 @@
-<template>.
-
+<template>
     <ion-menu content-id="main-content" menu-id="first-menu">
         <ion-header>
-            <!-- <ion-toolbar> -->
+           
                 <div class="control-header">
                     <p style="font-size: xx-small;">Bem vindo,</p>
                     <p style="font-size: larger;margin-top: -0.6rem;">{{ name }}</p>
 
                 </div>
-            <!-- </ion-toolbar> -->
+          
         </ion-header>
         <ion-content class="ion-padding">
-            
-            <ion-item button @click="() => router.push('/permissions')">
-                <ion-label>
-                    <span>
-                        
-                        Permission
-                    </span>
-                </ion-label>
-            </ion-item>
-            <ion-item button @click="() => router.push('/locals')">
-                <ion-label>
-                    
-                    
-                    <span>locals</span>
-                </ion-label>
-            </ion-item>
-           
-
+            <div class="">
+                <router-link to="/home">
+                   <ion-icon :icon="people"></ion-icon>
+                   <span  style="padding-left: 0.5rem;">
+                       Permission
+                   </span>
+                </router-link>
+              
+               <router-link to="/locals">
+                   <ion-icon :icon="location"></ion-icon>
+                   <span style="padding-left: 0.5rem;">Locals</span>
+               </router-link>
+            </div>
         </ion-content>
         <ion-footer>
             <ion-grid>
                 <ion-row>
                     <ion-col>
-                        <ion-button @click.prevent="logout()">
-                            sair
+                        <ion-button fill="outline" @click.prevent="logout()">
+                            <ion-icon :icon="logOut"></ion-icon>
                         </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
             
         </ion-footer>
-    </ion-menu>rererere
+    </ion-menu>
     <ion-page id="main-content">
         <ion-header>
            <ion-toolbar id="main-content">
@@ -70,12 +64,13 @@
                </ion-grid>
            </ion-toolbar>
         </ion-header> 
+    
         <ion-content class="ion-padding">
             <slot/>
         </ion-content>
     </ion-page>
 
-
+    
 </template>
 <script lang="ts">
 import { 
@@ -85,7 +80,7 @@ import {
     IonFooter
 
 } from '@ionic/vue';
-// import { ellipse, square, triangle, home } from 'ionicons/icons';
+import {  people,location, logOut } from 'ionicons/icons';
 import {  defineComponent,computed } from 'vue';
 import { useRouter,useRoute } from 'vue-router';
 import { useStore } from 'vuex';
@@ -111,6 +106,9 @@ export default defineComponent({
         }
         
         return {
+            people,
+            location,
+            logOut,
             router,
             auth,
             logout
@@ -119,6 +117,13 @@ export default defineComponent({
 })
 </script>
 <style>
+router-link {
+    display: block;
+    text-decoration: none;
+}
+ion-item{
+    padding: 0.4rem
+}
 ion-buttons{
     right: 0px !important;
     /* display:grid; */
