@@ -15,7 +15,7 @@ export default function useFetch(){
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         try{
             res = await axios.get('local')
-            store.commit('local/setData', res.data.data.locals)
+            store.commit('local/setLocal', res.data.locals)
         }catch(err){
             res = "Erro ao obter informações da API."
         }

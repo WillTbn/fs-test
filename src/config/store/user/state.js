@@ -2,6 +2,7 @@ export default function () {
   return {
     user:[],
     permissions:[],
-    auth:false
+    auth:false,
+    loading:false
   }
 }

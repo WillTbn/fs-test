@@ -1,11 +1,11 @@
 <template>
-     <ion-page style="text-color:#000">
+     <!-- <ion-page style="text-color:#000"> -->
         
-        <ion-grid>
-            <ion-row>
-                <ion-item>
+        <ion-grid fixed class="control-bg">
+            <ion-row class="ion-justify-content-center ion-align-items-center">
+                <ion-col size="8" class="">
                     <ion-searchbar></ion-searchbar>
-                </ion-item>
+                </ion-col>
             </ion-row>
             <ion-row>
                 <modal-form
@@ -21,14 +21,17 @@
                     </ion-button>
                 </ion-item> -->
             </ion-row>
-            <ion-row v-for="(locals, index) in list" :key="index">
-                <list-data
-                    :name="locals.name"
-                ></list-data>
-            </ion-row>
+            
+            <list-data
+                v-for="(locals, index) in list" :key="index"
+                :name="locals.name"
+                :id="locals.id"
+                url="local"
+            ></list-data>
+            
         </ion-grid>
 
-    </ion-page>
+    <!-- </ion-page> -->
 </template>
 
 <script>
@@ -75,3 +78,17 @@ export default defineComponent({
     }
 })
 </script>
+<style scoped>
+.control-bg{
+    background: linear-gradient(to bottom, black 8%, transparent 8%);
+}
+ion-grid {
+    --ion-grid-width: 100%;
+
+    --ion-grid-width-xs: 50%;
+    --ion-grid-width-sm: 288px;
+    --ion-grid-width-md: 384px;
+    --ion-grid-width-lg: 480px;
+    --ion-grid-width-xl: 570px;
+}
+</style>

@@ -1,10 +1,12 @@
 <template>
-     <ion-grid>
-        <ion-row>
-            <ion-col>
-                Formulário
-            </ion-col>
-        </ion-row>
+    <ion-loading 
+        :trigger="true" 
+        message="Loading..." 
+        spinner="circles"
+        duration="3000"
+        :isOpen="loading"
+    ></ion-loading>
+    <ion-grid >
         <form  @submit.prevent="createLocals()">
             <ion-row>
                 <ion-col>
@@ -13,7 +15,7 @@
                         label-placement="floating" 
                         fill="outline" 
                         placeholder="Enter text"
-                        :model-value="local.name"
+                        v-model="local.name"
                     ></ion-input>
                 </ion-col>
             </ion-row>
@@ -24,7 +26,7 @@
                         label-placement="floating" 
                         fill="outline" 
                         placeholder="Enter text"
-                        :model-value="local.zip_code"
+                        v-model="local.zip_code"
                         
                     ></ion-input>
                 </ion-col>
@@ -36,7 +38,7 @@
                         label-placement="floating" 
                         fill="outline" 
                         placeholder="Enter text"
-                        :model-value="local.city"
+                        v-model="local.city"
                     ></ion-input>
                 </ion-col>
             </ion-row>
@@ -47,7 +49,7 @@
                         label-placement="floating" 
                         fill="outline" 
                         placeholder="Enter text"
-                        :model-value="local.street"
+                        v-model="local.street"
                     ></ion-input>
                 </ion-col>
             </ion-row>
@@ -58,7 +60,7 @@
                         label-placement="floating" 
                         fill="outline" 
                         placeholder="Enter text"
-                        :model-value="local.number"
+                        v-model="local.number"
                     ></ion-input>
                 </ion-col>
             </ion-row>
@@ -79,8 +81,12 @@ import {
     IonGrid,
     IonRow,
     IonCol,
-    IonInput
+    IonInput,
+    IonLoading,
+    toastController,
 } from '@ionic/vue'
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 export default defineComponent({
     name:"Formlocals",
     components:{
@@ -88,9 +94,13 @@ export default defineComponent({
         IonGrid,
         IonRow,
         IonCol,
-        IonInput
+        IonInput,
+        IonLoading,
+        toastController,
     },
     setup(){
+        const router = useRouter()
+        const loading = ref(false)
         const local = ref({
             name:"",
             zip_code:"",
@@ -98,8 +108,30 @@ export default defineComponent({
             street:"",
             number:""
         })
+        const presentToast = async(msg, status) => {
+            const toast = await toastController.create({
+                message: msg,
+                duration: 1500,
+                position: 'middle',
+                cssClass: status,
+                color:status
+            });
 
+            await toast.present();
+        }
         const createLocals = () =>{
+            
+            loading.value = true
+            axios.post('local', local.value).then(json => {
+                presentToast('Local cadastrado!', 'success')
+                router.push({path:'/locals'}).then(() => {
+                    window.location.reload();
+                })
+            }).catch(e => {
+                presentToast(e.response.data.message, 'danger')
+            }).finally(()=>{
+                loading.value = false
+            })
             console.log('ola -> ', local.value)
         }
         return {
@@ -111,3 +143,10 @@ export default defineComponent({
 });
 
 </script>
+<style scoped>
+ion-input{
+    padding: 16px, 342px, 16px, 20px;
+    color: #000;
+    margin-top: 2rem;
+}
+</style>
